@@ -12,6 +12,8 @@ sudo cp ./nvim-linux64/bin/nvim /usr/bin/
 sudo cp -r ./nvim-linux64/lib /usr/lib/
 sudo cp -r ./nvim-linux64/share/* /usr/share/
 sudo cp ./nvim-linux64/man/man1/nvim.1 /usr/share/man/man1
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
-
-
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+sudo cp ./init.lua ~/.config/nvim/lua/plugin/init.lua 
+export OPENAI_API_KEY=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
+echo "export OPENAI_API_KEY=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" >> ~/.bashrc
+nvim
