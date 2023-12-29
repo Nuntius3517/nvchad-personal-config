@@ -3,14 +3,14 @@
 # Author : Github:Nuntius3517
 # Email : buzz.cyj@gmail.com 
 
-openai_key = "" #Insert your openai key 
+openai_key ="" #Insert your openai key 
 
 
 install() {
   echo "Installing.... "
 
   echo "Downloading & Installing the fonts"
-  if [-f ./BigBlueTerminal.zip ]; then 
+  if [ ! -f ./BigBlueTerminal.zip ]; then 
     wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/BigBlueTerminal.zip
   fi 
   sudo mkdir -p /usr/share/fonts/BigBlueTerm
@@ -18,7 +18,7 @@ install() {
   fc -c -v
   
   echo "Downloading & Installing the nvim"
-  if [ -f ./nvim-linux64]; then
+  if [ ! -f ./nvim-linux64 ]; then
     wget https://github.com/neovim/neovim/releases/download/v0.9.4/nvim-linux64.tar.gz
     gunzip nvim-linux64.tar.gz
     tar xvf nvim-linux64.tar
@@ -32,7 +32,7 @@ install() {
   sudo cp -r ./nvim-linux64/share/locale /usr/share/locale/ 
 
   echo "Downloading & Installing NvChad"
-  if [ -f ~/.config/nvim];then 
+  if [ ! -f ~/.config/nvim ];then 
     git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
   fi 
 
