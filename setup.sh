@@ -1,27 +1,19 @@
-#!bin/bash
+#!/bin/bash
 # This file is to install personal nvim setting used by the author
 # Author : Github:Nuntius3517
 # Email : buzz.cyj@gmail.com 
 
 openai_key="" #Insert your openai key 
 
-
-nvchad_install(){
-  echo "Downloading & Installing NvChad"
-	git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
-	cp ./init.lua ~/.config/nvim/lua/plugins
-}
-
 install() {
   echo "Installing.... "
-
   echo "Downloading & Installing the fonts"
   if [ ! -f ./BigBlueTerminal.zip ]; then 
     wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/BigBlueTerminal.zip
   fi 
   sudo mkdir -p /usr/share/fonts/BigBlueTerm
-  sudo unzip -d /usr/share/fonts/BigBlueTerm ./BigBlueTerm.zip
-  fc -c -v
+  sudo unzip -d /usr/share/fonts/BigBlueTerm ./BigBlueTerminal.zip
+  fc-cache -fv
   
   echo "Downloading & Installing the nvim"
   if [ ! -f ./nvim-linux64 ]; then
@@ -35,13 +27,18 @@ install() {
   sudo cp ./nvim-linux64/man/man1/nvim.1 /usr/share/man/man1/
   sudo cp ./nvim-linux64/share/icons/hicolor/128x128/apps/nvim.png /usr/share/icons/hicolor/128x128/apps 
   sudo cp -r ./nvim-linux64/share/nvim/ /usr/share/ 
-  sudo cp -r ./nvim-linux64/share/locale /usr/share/locale/ 
+  sudo cp -r ./nvim-linux64/share/locale /usr/share/locale/
+
+  echo "Downloading & Installing NvChad"
+  git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+  cp ./init.lua ~/.config/nvim/lua/plugins
+
 
   echo "Insatlling config and enviroment variable"
-  export OPENAI_API_KEY=$(openai_key)
-  echo "export OPENAI_API_KEY=$(openai_key)" >> ~/.bashrc
-  echo "alias vim=\"nvim\""
-
+  export OPENAI_API_KEY=${openai_key}
+  echo "export OPENAI_API_KEY=${openai_key}" >> ~/.bashrc
+  echo "alias vim=\"nvim\"" >> ~/.bashrc
+  source ~/.bashrc
   nvim 
 }
 
@@ -59,22 +56,26 @@ uninstall() {
   sudo rm /usr/share/icons/hicolor/128x128/apps/nvim.png
 
   echo "Removing the NvChad"
-  sudo rm -rf ~/.config/nvim/
- 
+  rm -rf ~/.config/nvim/
+  rm -rf ~/.local/share/nvim
+
+  echo "Removing download file"
+  sudo rm ./BigBlueTerminal.zip
+  sudo rm ./nvim-linux64.tar
+  sudo rm -rf ./nvim-linux64/
+
   echo "Removing the OPENAI_API_KEY"
-  sed -i "/export OPENAI_API_KEY=$(openai_key)" ~/.bashrc
+  sed -i "/export OPENAI_API_KEY/d" ~/.bashrc
   sed -i "/alias vim=\"nvim\"/d" ~/.bashrc
 
 }
+
 
 
 if [ $# -eq 0 ]; then 
     echo "No arguments provided"
 else
   case "$1" in
-    nvchad_install)
-      nvchad_install
-      ;; 
     install)
       install
       ;;
@@ -87,5 +88,3 @@ else
       exit 1
   esac 
 fi 
-      
-
