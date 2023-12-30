@@ -3,8 +3,13 @@
 # Author : Github:Nuntius3517
 # Email : buzz.cyj@gmail.com 
 
-openai_key ="" #Insert your openai key 
+openai_key="" #Insert your openai key 
 
+
+nvchad_install(){
+	git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+	cp ./init.lua ~/.config/nvim/lua/plugins
+}
 
 install() {
   echo "Installing.... "
@@ -32,12 +37,12 @@ install() {
   sudo cp -r ./nvim-linux64/share/locale /usr/share/locale/ 
 
   echo "Downloading & Installing NvChad"
-  if [ ! -f ~/.config/nvim ];then 
-    git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
-  fi 
+  #if [ ! -f ~/.config/nvim ];then 
+  #  git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+  #fi 
 
   echo "Insatlling config and enviroment variable"
-  sudo cp ./init.lua ~/.config/nvim/lua/plugins  
+  #sudo cp ./init.lua ~/.config/nvim/lua/plugins  
   export OPENAI_API_KEY=$(openai_key)
   echo "export OPENAI_API_KEY=$(openai_key)" >> ~/.bashrc
   echo "alias vim=\"nvim\""
@@ -71,7 +76,10 @@ uninstall() {
 if [ $# -eq 0 ]; then 
     echo "No arguments provided"
 else
-  case "$1" in 
+  case "$1" in
+    nvchad_install)
+      nvchad_install
+      ;; 
     install)
       install
       ;;
