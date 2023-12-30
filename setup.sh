@@ -7,6 +7,7 @@ openai_key="" #Insert your openai key
 
 
 nvchad_install(){
+  echo "Downloading & Installing NvChad"
 	git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 	cp ./init.lua ~/.config/nvim/lua/plugins
 }
@@ -36,13 +37,7 @@ install() {
   sudo cp -r ./nvim-linux64/share/nvim/ /usr/share/ 
   sudo cp -r ./nvim-linux64/share/locale /usr/share/locale/ 
 
-  echo "Downloading & Installing NvChad"
-  #if [ ! -f ~/.config/nvim ];then 
-  #  git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
-  #fi 
-
   echo "Insatlling config and enviroment variable"
-  #sudo cp ./init.lua ~/.config/nvim/lua/plugins  
   export OPENAI_API_KEY=$(openai_key)
   echo "export OPENAI_API_KEY=$(openai_key)" >> ~/.bashrc
   echo "alias vim=\"nvim\""
