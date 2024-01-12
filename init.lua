@@ -236,7 +236,7 @@ local default_plugins = {
     "nvim-telescope/telescope.nvim",
     dependencies = { 
 	    "nvim-treesitter/nvim-treesitter",
-	    "nvim-luz/plenary.nvim",		
+	    "nvim-lua/plenary.nvim",		
     },
     cmd = "Telescope",
     init = function()
