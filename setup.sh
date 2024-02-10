@@ -87,4 +87,7 @@ else
       echo "Usage: $0 {install|uninsatll}"
       exit 1
   esac 
-fi 
+fi
+# Additional package 
+# Install fd at https://github.com/sharkdp/fd
+#
